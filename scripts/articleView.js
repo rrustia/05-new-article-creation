@@ -79,14 +79,15 @@ articleView.initNewArticlePage = function() {
   });
 
   // TODO: Add an event handler to update the preview and the export field if any inputs change.
-  $('#new-form').on('change', articleView.create);
+  $('#new-form').on('change', 'input', 'textarea' ,articleView.create);
+
 };
 
 articleView.create = function() {
   // DONE: Set up a var to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
   var article;
-  $('#articles-preview').empty();
+  $('#articles').empty();
 
   // DONE: Instantiate an article based on what's in the form fields:
   article = new Article({
@@ -95,7 +96,7 @@ articleView.create = function() {
     title: $('#article-title').val(),
     category: $('#article-category').val(),
     body: $('#article-body').val(),
-    publishedOn: $('#article-published:checked').length ? new Date() : null
+    shedOn: $('#article-published:checked').length ? new Date() : null
   });
 
   // DONE: Use our interface to the Handblebars template to put this new article into the DOM:
@@ -103,8 +104,8 @@ articleView.create = function() {
 
   // DONE: Activate the highlighting of any code blocks:
   $('pre code').each(function(i, block) {
-    hljs.highlighBlock(block);
-  });
+   hljs.highlightBlock(block);
+ });
 
   // DONE: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
   $('#export-field').show();
@@ -113,7 +114,6 @@ articleView.create = function() {
 
 
   articleView.initIndexPage = function() {
-  preventRawDataProblem();
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
